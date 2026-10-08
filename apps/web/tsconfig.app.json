@@ -8,13 +8,7 @@
 
     "allowArbitraryExtensions": true,
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "moduleDetection": "force"
   },
   "include": ["src"]
 }

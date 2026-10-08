@@ -5,13 +5,7 @@
     "types": ["node"],
 
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "moduleDetection": "force"
   },
   "include": ["vite.config.ts"]
 }
