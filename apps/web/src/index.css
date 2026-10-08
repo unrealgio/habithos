@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-night-950: #0b1020;
+  --color-night-900: #121a2e;
+  --color-night-800: #1c2640;
+  --color-gold-400: #f5c451;
+  --color-flame-500: #f97316;
+}
+
+body {
+  @apply bg-night-950 text-slate-200 antialiased;
+}

@@ -3,7 +3,6 @@ import { APP_NAME } from "@habithos/shared";
 
 const app = express();
 
-// Temporary: the port will come from validated environment variables in Phase 5.
 const PORT = 3333;
 
 app.get("/api/health", (_req, res) => {
