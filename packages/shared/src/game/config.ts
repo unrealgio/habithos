@@ -13,3 +13,6 @@ export const DIFFICULTY_REWARDS: DifficultyRewardTable = {
   medium: { xp: 25, coins: 10, points: 3, attributePoints: 5 },
   hard: { xp: 50, coins: 20, points: 5, attributePoints: 10 },
 };
+
+export const LEVEL_BASE_XP = 100;
+export const LEVEL_EXPONENT = 1.4;

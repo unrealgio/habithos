@@ -6,3 +6,9 @@ export type Reward = {
   points: number;
   attributePoints: number;
 };
+
+export type LevelProgress = {
+  level: number;
+  xpIntoLevel: number;
+  xpToNextLevel: number;
+};
