@@ -20,10 +20,15 @@
     "db:up": "docker compose up -d --wait",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f db",
+    "db:generate": "npm run db:generate -w @habithos/api --",
+    "db:migrate": "npm run db:migrate -w @habithos/api",
     "db:psql": "docker compose exec db sh -c \"psql -U $POSTGRES_USER -d $POSTGRES_DB\""
   },
   "overrides": {
-    "shell-quote": "^1.12.0"
+    "shell-quote": "^1.12.0",
+    "@esbuild-kit/core-utils": {
+      "esbuild": ">=0.25.0"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
