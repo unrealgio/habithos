@@ -1,0 +1,22 @@
+name: habithos
+
+services:
+  db:
+    image: postgres:18
+    container_name: habithos-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is missing in .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is missing in .env}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is missing in .env}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
