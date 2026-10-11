@@ -81,6 +81,10 @@ docker-compose.yml   PostgreSQL service for local development
 | `POSTGRES_DB`       | Database name                                        |
 | `POSTGRES_PORT`     | Host port for PostgreSQL (default `5433`)            |
 | `DATABASE_URL`      | Connection string used by the API and by Drizzle Kit |
+| `PORT`              | API port (optional, default `3333`)                  |
+
+The variables are validated when the API starts; if one is missing or invalid, the API stops and lists the problems.
+If you change `PORT`, also update the `/api` proxy in `apps/web/vite.config.ts`.
 
 ## Database workflow
 

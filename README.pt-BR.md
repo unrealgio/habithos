@@ -81,6 +81,10 @@ docker-compose.yml   Serviço PostgreSQL para desenvolvimento local
 | `POSTGRES_DB`       | Nome do banco                                       |
 | `POSTGRES_PORT`     | Porta do PostgreSQL na sua máquina (padrão `5433`)  |
 | `DATABASE_URL`      | String de conexão usada pela API e pelo Drizzle Kit |
+| `PORT`              | Porta da API (opcional, padrão `3333`)              |
+
+As variáveis são validadas quando a API inicia; se alguma estiver faltando ou for inválida, a API para e lista os
+problemas. Se mudar a `PORT`, atualize também o proxy de `/api` em `apps/web/vite.config.ts`.
 
 ## Fluxo de banco de dados
 
