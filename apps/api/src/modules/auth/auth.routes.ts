@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { registerSchema } from "@habithos/shared";
+import { loginSchema, registerSchema } from "@habithos/shared";
+import { requireAuth } from "../../middlewares/require-auth";
 import { validateBody } from "../../middlewares/validate-body";
-import { register } from "./auth.controller";
+import { login, logout, me, register } from "./auth.controller";
 
 export const authRouter = Router();
 
 authRouter.post("/register", validateBody(registerSchema), register);
+authRouter.post("/login", validateBody(loginSchema), login);
+authRouter.post("/logout", logout);
+authRouter.get("/me", requireAuth, me);

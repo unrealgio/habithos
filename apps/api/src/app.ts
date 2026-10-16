@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import express from "express";
 import { errorHandler } from "./middlewares/error-handler";
 import { notFound } from "./middlewares/not-found";
@@ -7,6 +8,7 @@ import { healthRouter } from "./modules/health/health.routes";
 export const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/health", healthRouter);
 app.use("/api/auth", authRouter);
