@@ -8,7 +8,11 @@
 
     "allowArbitraryExtensions": true,
     "allowImportingTsExtensions": true,
-    "moduleDetection": "force"
+    "moduleDetection": "force",
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }

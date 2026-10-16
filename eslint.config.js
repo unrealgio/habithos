@@ -17,4 +17,10 @@ export default defineConfig(
     files: ["apps/web/**/*.{ts,tsx}"],
     extends: [reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
   },
+  {
+    files: ["apps/web/src/components/ui/**/*.tsx"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
+  },
 );
