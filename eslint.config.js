@@ -9,6 +9,11 @@ export default defineConfig(
   js.configs.recommended,
   tseslint.configs.recommended,
   {
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
+  },
+  {
     files: ["apps/web/**/*.{ts,tsx}"],
     extends: [reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
   },
