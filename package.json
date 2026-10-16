@@ -22,7 +22,8 @@
     "db:logs": "docker compose logs -f db",
     "db:generate": "npm run db:generate -w @habithos/api --",
     "db:migrate": "npm run db:migrate -w @habithos/api",
-    "db:psql": "docker compose exec db sh -c \"psql -U $POSTGRES_USER -d $POSTGRES_DB\""
+    "db:psql": "docker compose exec db sh -c \"psql -U $POSTGRES_USER -d $POSTGRES_DB\"",
+    "db:create-test": "docker compose exec db sh -c \"createdb -U $POSTGRES_USER habithos_test\""
   },
   "overrides": {
     "shell-quote": "^1.12.0",

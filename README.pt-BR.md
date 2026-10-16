@@ -43,7 +43,11 @@ docker-compose.yml   Serviço PostgreSQL para desenvolvimento local
    ```bash
    cp .env.example .env
    ```
-   Depois edite o `.env` e defina uma senha **tanto** em `POSTGRES_PASSWORD` **quanto** em `DATABASE_URL`.
+   Depois edite o `.env`: defina uma senha em `POSTGRES_PASSWORD`, `DATABASE_URL` e `TEST_DATABASE_URL`,
+   e troque o `JWT_SECRET` por um valor aleatório, por exemplo a saída de:
+   ```bash
+   node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+   ```
 3. Suba o banco e aplique as migrations:
    ```bash
    npm run db:up
@@ -71,17 +75,21 @@ docker-compose.yml   Serviço PostgreSQL para desenvolvimento local
 | `npm run db:psql`                      | Abre o `psql` dentro do contêiner do banco                      |
 | `npm run db:generate -- --name <nome>` | Gera uma migration a partir das mudanças no schema              |
 | `npm run db:migrate`                   | Aplica as migrations pendentes                                  |
+| `npm run db:create-test`               | Cria o banco `habithos_test` (uma vez só)                       |
 
 ## Variáveis de ambiente
 
-| Variável            | Descrição                                           |
-| ------------------- | --------------------------------------------------- |
-| `POSTGRES_USER`     | Usuário do banco, criado na primeira inicialização  |
-| `POSTGRES_PASSWORD` | Senha desse usuário                                 |
-| `POSTGRES_DB`       | Nome do banco                                       |
-| `POSTGRES_PORT`     | Porta do PostgreSQL na sua máquina (padrão `5433`)  |
-| `DATABASE_URL`      | String de conexão usada pela API e pelo Drizzle Kit |
-| `PORT`              | Porta da API (opcional, padrão `3333`)              |
+| Variável            | Descrição                                                                |
+| ------------------- | ------------------------------------------------------------------------ |
+| `POSTGRES_USER`     | Usuário do banco, criado na primeira inicialização                       |
+| `POSTGRES_PASSWORD` | Senha desse usuário                                                      |
+| `POSTGRES_DB`       | Nome do banco                                                            |
+| `POSTGRES_PORT`     | Porta do PostgreSQL na sua máquina (padrão `5433`)                       |
+| `DATABASE_URL`      | String de conexão usada pela API e pelo Drizzle Kit                      |
+| `PORT`              | Porta da API (opcional, padrão `3333`)                                   |
+| `NODE_ENV`          | `development`, `test` ou `production` (opcional, padrão `development`)   |
+| `JWT_SECRET`        | Segredo usado para assinar os tokens de login (mínimo de 32 caracteres)  |
+| `TEST_DATABASE_URL` | String de conexão do banco de testes; o nome precisa terminar em `_test` |
 
 As variáveis são validadas quando a API inicia; se alguma estiver faltando ou for inválida, a API para e lista os
 problemas. Se mudar a `PORT`, atualize também o proxy de `/api` em `apps/web/vite.config.ts`.
@@ -94,3 +102,15 @@ problemas. Se mudar a `PORT`, atualize também o proxy de `/api` em `apps/web/vi
 4. Aplique: `npm run db:migrate`.
 
 Nunca edite uma migration que já foi aplicada — crie uma nova.
+
+## Testes
+
+Os testes da API usam um banco separado, `habithos_test`, no mesmo contêiner. Crie-o uma vez:
+
+```bash
+npm run db:up
+npm run db:create-test
+```
+
+Depois disso, o `npm test` aplica as migrations no banco de testes automaticamente antes de rodar. O contêiner do
+banco precisa estar rodando (`npm run db:up`).

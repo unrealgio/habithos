@@ -43,7 +43,11 @@ docker-compose.yml   PostgreSQL service for local development
    ```bash
    cp .env.example .env
    ```
-   Then edit `.env` and set a password in **both** `POSTGRES_PASSWORD` and `DATABASE_URL`.
+   Then edit `.env`: set a password in `POSTGRES_PASSWORD`, `DATABASE_URL` and `TEST_DATABASE_URL`,
+   and replace `JWT_SECRET` with a random value, for example the output of:
+   ```bash
+   node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+   ```
 3. Start the database and apply the migrations:
    ```bash
    npm run db:up
@@ -71,17 +75,21 @@ docker-compose.yml   PostgreSQL service for local development
 | `npm run db:psql`                      | Opens `psql` inside the database container               |
 | `npm run db:generate -- --name <name>` | Generates a migration from schema changes                |
 | `npm run db:migrate`                   | Applies pending migrations                               |
+| `npm run db:create-test`               | Creates the `habithos_test` database (once)              |
 
 ## Environment variables
 
-| Variable            | Description                                          |
-| ------------------- | ---------------------------------------------------- |
-| `POSTGRES_USER`     | Database user created on first start                 |
-| `POSTGRES_PASSWORD` | Password for that user                               |
-| `POSTGRES_DB`       | Database name                                        |
-| `POSTGRES_PORT`     | Host port for PostgreSQL (default `5433`)            |
-| `DATABASE_URL`      | Connection string used by the API and by Drizzle Kit |
-| `PORT`              | API port (optional, default `3333`)                  |
+| Variable            | Description                                                             |
+| ------------------- | ----------------------------------------------------------------------- |
+| `POSTGRES_USER`     | Database user created on first start                                    |
+| `POSTGRES_PASSWORD` | Password for that user                                                  |
+| `POSTGRES_DB`       | Database name                                                           |
+| `POSTGRES_PORT`     | Host port for PostgreSQL (default `5433`)                               |
+| `DATABASE_URL`      | Connection string used by the API and by Drizzle Kit                    |
+| `PORT`              | API port (optional, default `3333`)                                     |
+| `NODE_ENV`          | `development`, `test` or `production` (optional, default `development`) |
+| `JWT_SECRET`        | Secret used to sign login tokens (at least 32 characters)               |
+| `TEST_DATABASE_URL` | Connection string of the test database; its name must end with `_test`  |
 
 The variables are validated when the API starts; if one is missing or invalid, the API stops and lists the problems.
 If you change `PORT`, also update the `/api` proxy in `apps/web/vite.config.ts`.
@@ -94,3 +102,15 @@ If you change `PORT`, also update the `/api` proxy in `apps/web/vite.config.ts`.
 4. Apply it: `npm run db:migrate`.
 
 Never edit a migration that was already applied — create a new one instead.
+
+## Tests
+
+API tests run against a separate database, `habithos_test`, in the same container. Create it once:
+
+```bash
+npm run db:up
+npm run db:create-test
+```
+
+After that, `npm test` applies the migrations to the test database automatically before running. The database
+container must be running (`npm run db:up`).
