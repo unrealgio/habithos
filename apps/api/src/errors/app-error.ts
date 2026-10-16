@@ -1,4 +1,5 @@
-export type ErrorCode = "INVALID_JSON" | "VALIDATION_ERROR" | "NOT_FOUND" | "INTERNAL_ERROR";
+export type ErrorCode =
+  "INVALID_JSON" | "VALIDATION_ERROR" | "NOT_FOUND" | "EMAIL_TAKEN" | "INTERNAL_ERROR";
 
 export type FieldErrors = Record<string, string[] | undefined>;
 
